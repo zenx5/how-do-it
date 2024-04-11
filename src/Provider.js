@@ -1,4 +1,5 @@
-const { useEffect, useState, useRef } = require("react");
+const React = require("react");
+const { useEffect, useState, useRef } = React
 
 function HowDoitProvider({content, children }) {
     const [current, setCurrent] = useState(null)

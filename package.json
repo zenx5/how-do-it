@@ -1,6 +1,6 @@
 {
   "name": "how-do-it",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Crea popup para describir tu aplicacion",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "url": "https://github.com/zenx5/how-do-it/issues"
   },
   "homepage": "https://github.com/zenx5/how-do-it#readme",
-  "devDependencies": {
+  "dependencies": {
     "react": "^18.2.0"
   }
 }
