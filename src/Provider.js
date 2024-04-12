@@ -35,7 +35,7 @@ function HowDoitProvider({content, children }) {
     const styleContent = `
         *[data-howdoit] {
             position: relative;
-            border: 4px solid rgb(241 245 249);
+            border: 4px solid rgb(148 163 184);
 
             &:hover{
                 border: 4px solid #DBEAFE;
@@ -111,4 +111,6 @@ function HowDoitProvider({content, children }) {
     return React.createElement(HowDoitContext.Provider, {value:values, className:'how-do-it-provider'}, children, span)
 }
 
-module.exports = HowDoitProvider
+module.exports = {
+    HowDoitProvider
+}
