@@ -40,6 +40,40 @@ function HowDoitProvider({content, children }) {
 
     const handlerClose = () => setShow(false)
 
+    const styleContent = `
+    .how-do-it-provider {
+        [data-howdoit] {
+            position: relative;
+            border-width: 4px;
+
+            &:hover{
+                border-color: #DBEAFE;
+            }
+
+            &::before{
+                position: absolute;
+                right: 1.25rem;
+                padding: 0;
+                border-radius: 9999px;
+                width: 1.25rem;
+                height: 1.25rem;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                text-align: center;
+                cursor: pointer;
+                &:hover {
+                    color: #3B82F6;
+                    background-color: #DBEAFE;
+                }
+            }
+        }
+    }`
+
+    const style = React.createElement('style',{
+        rel:'stylesheet',
+        type:'text/css'
+    }, styleContent)
+
     const span = React.createElement('span', {
         ref: ref,
         style: {
@@ -73,7 +107,7 @@ function HowDoitProvider({content, children }) {
             }
         }, 'x'))
 
-    return React.createElement(HowDoitContext.Provider, {value:values}, children, span)
+    return React.createElement(HowDoitContext.Provider, {value:values, className:'how-do-it-provider'}, style, children, span)
 }
 
 module.exports = HowDoitProvider
