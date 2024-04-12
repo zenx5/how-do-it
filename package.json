@@ -1,11 +1,8 @@
 {
   "name": "how-do-it",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Crea popup para describir tu aplicacion",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zenx5/how-do-it.git"
