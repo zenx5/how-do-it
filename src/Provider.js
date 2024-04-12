@@ -7,12 +7,6 @@ function HowDoitProvider({content, children }) {
     const [show, setShow] = useState(false)
     const ref = useRef()
 
-    const createDataset = key => {
-        return {
-            'data-howdoit': key
-        }
-    }
-
     useEffect(()=>{
         function clickIt(event) {
             const howdoit = event.target.dataset.howdoit
@@ -34,9 +28,7 @@ function HowDoitProvider({content, children }) {
         }
     },[show])
 
-    const values = {
-        createDataset
-    }
+    const values = {}
 
     const handlerClose = () => setShow(false)
 

@@ -1,7 +1,5 @@
 const { createContext } = require('react')
 
-const HowDoitContext = createContext({
-    createDataset: key => ({ 'data-howdoit': key })
-})
+const HowDoitContext = createContext()
 
 module.exports = HowDoitContext
