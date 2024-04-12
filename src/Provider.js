@@ -41,38 +41,42 @@ function HowDoitProvider({content, children }) {
     const handlerClose = () => setShow(false)
 
     const styleContent = `
-    .how-do-it-provider {
-        [data-howdoit] {
+        *[data-howdoit] {
             position: relative;
-            border-width: 4px;
+            border: 4px solid rgb(241 245 249);
 
             &:hover{
-                border-color: #DBEAFE;
-            }
-
-            &::before{
-                position: absolute;
-                right: 1.25rem;
-                padding: 0;
-                border-radius: 9999px;
-                width: 1.25rem;
-                height: 1.25rem;
-                font-size: 0.875rem;
-                line-height: 1.25rem;
-                text-align: center;
-                cursor: pointer;
-                &:hover {
-                    color: #3B82F6;
-                    background-color: #DBEAFE;
+                border: 4px solid #DBEAFE;
+                &:before {
+                    background-color: rgb(219 234 254);
+                    content: '?';
+                    color: rgb(59 130 246);
                 }
             }
-        }
-    }`
 
-    const style = React.createElement('style',{
-        rel:'stylesheet',
-        type:'text/css'
-    }, styleContent)
+            &:before{
+                position: absolute;
+                right: -1rem;
+                height: 1.25rem;
+                width: 1.25rem;
+                cursor: pointer;
+                border-radius: 9999px;
+                background-color: rgb(241 245 249);
+                padding: 0px;
+                text-align: center;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                color: rgb(148 163 184);
+                content: '?';
+            }
+        }`
+
+    if( !document.querySelector('#how-do-it-style') ){
+        const style = document.createElement('style')
+        style.id = 'how-do-it-style'
+        style.innerHTML = styleContent
+        document.head.appendChild(style)
+    }
 
     const span = React.createElement('span', {
         ref: ref,
@@ -83,9 +87,13 @@ function HowDoitProvider({content, children }) {
             left: "25%",
             borderRadius: "0.75rem",
             width: "50%",
+            height: "15rem",
+            marginLeft: "auto",
+            marginRight: "auto",
+            backgroundColor: "rgb(100 116 139)",
             transitionProperty: "all",
             transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-            transitionDuration: ["300ms", "1000ms"],
+            transitionDuration: "1000ms",
             boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"
         }
         },
@@ -99,15 +107,16 @@ function HowDoitProvider({content, children }) {
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: "9999px",
-                borderWidth: "1px",
+                border: "1px solid rgb(100 116 139)",
                 width: "1.25rem",
                 height: "1.25rem",
                 backgroundColor: "#ffffff",
-                cursor: "pointer"
+                cursor: "pointer",
+                padding: "12px",
             }
         }, 'x'))
 
-    return React.createElement(HowDoitContext.Provider, {value:values, className:'how-do-it-provider'}, style, children, span)
+    return React.createElement(HowDoitContext.Provider, {value:values, className:'how-do-it-provider'}, children, span)
 }
 
 module.exports = HowDoitProvider
