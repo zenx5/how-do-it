@@ -1,6 +1,6 @@
 const React = require("react");
 const { useEffect, useState, useRef } = React
-const HowDoitContext = require("./Context");
+const { HowDoitContext } = require("./Context");
 
 function HowDoitProvider({content, children }) {
     const [current, setCurrent] = useState(null)
