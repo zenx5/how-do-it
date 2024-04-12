@@ -1,6 +1,6 @@
 {
   "name": "how-do-it",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Crea popup para describir tu aplicacion",
   "main": "index.js",
   "repository": {

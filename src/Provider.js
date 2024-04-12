@@ -73,7 +73,7 @@ function HowDoitProvider({content, children }) {
             }
         }, 'x'))
 
-    return HowDoitContext.Provider({ value: values }, children, span)
+    return React.createElement(HowDoitContext.Provider, {value:values}, children, span)
 }
 
 module.exports = HowDoitProvider
