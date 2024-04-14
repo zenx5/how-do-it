@@ -3,7 +3,7 @@
 Usa este modulo para desplegar modales de ayuda o información dentro de tu aplicación de React
 
 ## Uso
-Importa el Provider y luego envuelve tu appliacación en él
+Importa el Provider y luego envuelve tu appliacación en él <br/>
 <code> import { HowDoitProvider } from 'how-do-it'</code>
 
 <code>
