@@ -1,15 +1,22 @@
-const React = require("react");
-const { useEffect, useState, useRef } = React
-const { HowDoitContext } = require("./Context");
+import  React, { useEffect, useState, useRef } from "react"
+import { HowDoitContext } from "./Context"
+import { elementStyleTemplate } from "./constants"
 
-function HowDoitProvider({content, children }) {
+export function HowDoitProvider({
+    content,
+    elementStyle,
+    children
+}) {
     const [current, setCurrent] = useState(null)
     const [show, setShow] = useState(false)
     const ref = useRef()
 
     useEffect(()=>{
         function clickIt(event) {
+            event.preventDefault()
+            console.log( event )
             const howdoit = event.target.dataset.howdoit
+
             if( howdoit ) {
                 setCurrent(howdoit)
                 ref.current.style.display = 'block'
@@ -28,47 +35,65 @@ function HowDoitProvider({content, children }) {
         }
     },[show])
 
+    useEffect(()=>{
+        const {
+            marker = "?",
+            borderColor = "rgb(148 163 184)",
+            backgroundColor = "rgb(241 245 249)",
+            colorMarker = "rgb(148 163 184)",
+            markerHover = "?",
+            borderColorHover = "#DBEAFE",
+            backgroundColorHover= "rgb(219 234 254)",
+            colorMarkerHover = "rgb(59 130 246)",
+        } = elementStyle
+        const elementStyleContent = elementStyleTemplate
+            .replace(/{marker}/g, marker)
+            .replace(/{borderColor}/g, borderColor)
+            .replace(/{backgroundColor}/g, backgroundColor)
+            .replace(/{colorMarker}/g, colorMarker)
+            .replace(/{markerHover}/g, markerHover)
+            .replace(/{borderColorHover}/g, borderColorHover)
+            .replace(/{backgroundColorHover}/g, backgroundColorHover)
+            .replace(/{colorMarkerHover}/g, colorMarkerHover)
+        const styleInserted = document.querySelector('#how-do-it-style')
+        if( !styleInserted ){
+            const style = document.createElement('style')
+            style.id = 'how-do-it-style'
+            style.innerHTML = elementStyleContent
+            document.head.appendChild(style)
+        } else {
+            styleInserted.innerHTML = elementStyleContent
+        }
+    },[ elementStyle ])
+
+    useEffect(()=>{
+        const all = document.querySelectorAll('[data-howdoit]')
+        all.forEach((item, index)=>{
+            const btn = document.querySelector(`[data-howdoit-button="${index}"]`)
+            if( !btn ) {
+                const button = document.createElement('button')
+                button.dataset.howdoitButton = index
+                // button.style.position = "absolute"
+                // button.style.right = "-1rem"
+                // button.style.height = "1.25rem"
+                // button.style.width = "1.25rem"
+                // button.style.cursor = "pointer"
+                // button.style.borderRadius = "9999px"
+                // button.style.backgroundColor = "rgb(241 245 249)"
+                // button.style.padding = "0px"
+                // button.style.textAlign = "center"
+                // button.style.fontSize = "0.875rem"
+                // button.style.lineHeight = "1.25rem"
+                // button.style.color = "rgb(148 163 184)"
+                // button.innerHTML = 
+                item.appendChild(button)
+            }
+        })
+    },[])
+
     const values = {}
 
     const handlerClose = () => setShow(false)
-
-    const styleContent = `
-        *[data-howdoit] {
-            position: relative;
-            border: 4px solid rgb(148 163 184);
-
-            &:hover{
-                border: 4px solid #DBEAFE;
-                &:before {
-                    background-color: rgb(219 234 254);
-                    content: '?';
-                    color: rgb(59 130 246);
-                }
-            }
-
-            &:before{
-                position: absolute;
-                right: -1rem;
-                height: 1.25rem;
-                width: 1.25rem;
-                cursor: pointer;
-                border-radius: 9999px;
-                background-color: rgb(241 245 249);
-                padding: 0px;
-                text-align: center;
-                font-size: 0.875rem;
-                line-height: 1.25rem;
-                color: rgb(148 163 184);
-                content: '?';
-            }
-        }`
-
-    if( !document.querySelector('#how-do-it-style') ){
-        const style = document.createElement('style')
-        style.id = 'how-do-it-style'
-        style.innerHTML = styleContent
-        document.head.appendChild(style)
-    }
 
     const span = React.createElement('span', {
         ref: ref,
@@ -109,8 +134,4 @@ function HowDoitProvider({content, children }) {
         }, 'x'))
 
     return React.createElement(HowDoitContext.Provider, {value:values, className:'how-do-it-provider'}, children, span)
-}
-
-module.exports = {
-    HowDoitProvider
 }

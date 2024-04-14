@@ -1,8 +1,2 @@
-const { HowDoitContext } = require('./src/Context');
-const { HowDoitProvider } = require('./src/Provider');
-
-
-module.exports = {
-    HowDoitContext,
-    HowDoitProvider
-}
+export { HowDoitContext } from './src/Context'
+export { HowDoitProvider } from './src/Provider'

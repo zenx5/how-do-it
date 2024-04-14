@@ -1,7 +1,3 @@
-const { createContext } = require('react')
+import { createContext } from 'react'
 
-const HowDoitContext = createContext()
-
-module.exports = {
-    HowDoitContext
-}
+export const HowDoitContext = createContext()
