@@ -5,11 +5,6 @@ export const elementStyleTemplate = `
 
             &:hover{
                 border: 4px solid {borderColorHover};
-                /*&:before {
-                    background-color: {backgroundColorHover};
-                    content: '{markerHover}';
-                    color: {colorMarkerHover};
-                }*/
             }
 
             button[data-howdoit-button] {
@@ -25,6 +20,8 @@ export const elementStyleTemplate = `
                 font-size: 0.875rem;
                 line-height: 1.25rem;
                 color: {colorMarker};
-                content: '{marker}';
+                &:hover{
+                    color: {colorMarkerHover};
+                }
             }
         }`

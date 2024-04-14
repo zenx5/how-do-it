@@ -12,23 +12,6 @@ export function HowDoitProvider({
     const ref = useRef()
 
     useEffect(()=>{
-        function clickIt(event) {
-            event.preventDefault()
-            console.log( event )
-            const howdoit = event.target.dataset.howdoit
-
-            if( howdoit ) {
-                setCurrent(howdoit)
-                ref.current.style.display = 'block'
-                setTimeout(()=>setShow( () =>  true),100)
-            }
-        }
-        document.addEventListener('click', clickIt)
-
-        return ()=>document.removeEventListener('click', clickIt)
-    },[show])
-
-    useEffect(()=>{
         if( !show ) {
             setCurrent(null)
             setTimeout(()=>ref.current.style.display = 'none', 1100)
@@ -37,24 +20,20 @@ export function HowDoitProvider({
 
     useEffect(()=>{
         const {
-            marker = "?",
             borderColor = "rgb(148 163 184)",
-            backgroundColor = "rgb(241 245 249)",
             colorMarker = "rgb(148 163 184)",
-            markerHover = "?",
+            backgroundColor = "rgb(241 245 249)",
             borderColorHover = "#DBEAFE",
-            backgroundColorHover= "rgb(219 234 254)",
             colorMarkerHover = "rgb(59 130 246)",
+            backgroundColorHover= "rgb(219 234 254)"
         } = elementStyle
         const elementStyleContent = elementStyleTemplate
-            .replace(/{marker}/g, marker)
             .replace(/{borderColor}/g, borderColor)
-            .replace(/{backgroundColor}/g, backgroundColor)
             .replace(/{colorMarker}/g, colorMarker)
-            .replace(/{markerHover}/g, markerHover)
+            .replace(/{backgroundColor}/g, backgroundColor)
             .replace(/{borderColorHover}/g, borderColorHover)
-            .replace(/{backgroundColorHover}/g, backgroundColorHover)
             .replace(/{colorMarkerHover}/g, colorMarkerHover)
+            .replace(/{backgroundColorHover}/g, backgroundColorHover)
         const styleInserted = document.querySelector('#how-do-it-style')
         if( !styleInserted ){
             const style = document.createElement('style')
@@ -71,21 +50,26 @@ export function HowDoitProvider({
         all.forEach((item, index)=>{
             const btn = document.querySelector(`[data-howdoit-button="${index}"]`)
             if( !btn ) {
+                const marker = item.dataset.howdoitMarker || '?'
+                const markerHover = item.dataset.howdoitMarkerHover || '?'
                 const button = document.createElement('button')
                 button.dataset.howdoitButton = index
-                // button.style.position = "absolute"
-                // button.style.right = "-1rem"
-                // button.style.height = "1.25rem"
-                // button.style.width = "1.25rem"
-                // button.style.cursor = "pointer"
-                // button.style.borderRadius = "9999px"
-                // button.style.backgroundColor = "rgb(241 245 249)"
-                // button.style.padding = "0px"
-                // button.style.textAlign = "center"
-                // button.style.fontSize = "0.875rem"
-                // button.style.lineHeight = "1.25rem"
-                // button.style.color = "rgb(148 163 184)"
-                // button.innerHTML = 
+                button.innerHTML = marker
+                button.addEventListener('mouseover', (event)=>{
+                    button.innerHTML = markerHover
+                })
+                button.addEventListener('mouseout', (event)=>{
+                    button.innerHTML = marker
+                })
+                button.addEventListener('click', (event)=>{
+                    event.stopPropagation()
+                    const { howdoit } = event.target.parentElement.dataset
+                    if( howdoit ) {
+                        setCurrent(howdoit)
+                        ref.current.style.display = 'block'
+                        setTimeout(()=>setShow( () =>  true),100)
+                    }
+                })
                 item.appendChild(button)
             }
         })
