@@ -18,6 +18,33 @@ export function HowDoitProvider({
     const [show, setShow] = useState(false)
     const ref = useRef()
 
+    const renderButtons = (item, index) => {
+        const btn = document.querySelector(`[data-howdoit-button="${index}"]`)
+        if( !btn ) {
+            const marker = item.dataset.howdoitMarker || '?'
+            const markerHover = item.dataset.howdoitMarkerHover || '?'
+            const button = document.createElement('button')
+            button.dataset.howdoitButton = index
+            button.innerHTML = marker
+            button.addEventListener('mouseover', (event)=>{
+                button.innerHTML = markerHover
+            })
+            button.addEventListener('mouseout', (event)=>{
+                button.innerHTML = marker
+            })
+            button.addEventListener('click', (event)=>{
+                event.stopPropagation()
+                const { howdoit } = event.target.parentElement.dataset
+                if( howdoit ) {
+                    setCurrent(howdoit)
+                    ref.current.style.display = 'block'
+                    setTimeout(()=>setShow( () =>  true),100)
+                }
+            })
+            item.appendChild(button)
+        }
+    }
+
     useEffect(()=>{
         if( !show ) {
             setCurrent(null)
@@ -53,33 +80,13 @@ export function HowDoitProvider({
     },[ elementStyle ])
 
     useEffect(()=>{
-        const all = document.querySelectorAll('[data-howdoit]')
-        all.forEach((item, index)=>{
-            const btn = document.querySelector(`[data-howdoit-button="${index}"]`)
-            if( !btn ) {
-                const marker = item.dataset.howdoitMarker || '?'
-                const markerHover = item.dataset.howdoitMarkerHover || '?'
-                const button = document.createElement('button')
-                button.dataset.howdoitButton = index
-                button.innerHTML = marker
-                button.addEventListener('mouseover', (event)=>{
-                    button.innerHTML = markerHover
-                })
-                button.addEventListener('mouseout', (event)=>{
-                    button.innerHTML = marker
-                })
-                button.addEventListener('click', (event)=>{
-                    event.stopPropagation()
-                    const { howdoit } = event.target.parentElement.dataset
-                    if( howdoit ) {
-                        setCurrent(howdoit)
-                        ref.current.style.display = 'block'
-                        setTimeout(()=>setShow( () =>  true),100)
-                    }
-                })
-                item.appendChild(button)
-            }
+        const observer = new MutationObserver(() => {
+            const all = document.querySelectorAll('[data-howdoit]')
+            all.forEach(renderButtons)
         })
+        observer.observe(document.body, { childList: true, subtree: true })
+
+        return () => observer.disconnect()
     },[])
 
     const values = {}
