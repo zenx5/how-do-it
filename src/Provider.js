@@ -4,7 +4,14 @@ import { elementStyleTemplate } from "./constants"
 
 export function HowDoitProvider({
     content,
-    elementStyle,
+    elementStyle = {
+        borderColor: "rgb(148 163 184)",
+        colorMarker: "rgb(148 163 184)",
+        backgroundColor: "rgb(241 245 249)",
+        borderColorHover: "#DBEAFE",
+        colorMarkerHover: "rgb(59 130 246)",
+        backgroundColorHover: "rgb(219 234 254)"
+    },
     children
 }) {
     const [current, setCurrent] = useState(null)
@@ -20,12 +27,12 @@ export function HowDoitProvider({
 
     useEffect(()=>{
         const {
-            borderColor = "rgb(148 163 184)",
-            colorMarker = "rgb(148 163 184)",
-            backgroundColor = "rgb(241 245 249)",
-            borderColorHover = "#DBEAFE",
-            colorMarkerHover = "rgb(59 130 246)",
-            backgroundColorHover= "rgb(219 234 254)"
+            borderColor,
+            colorMarker,
+            backgroundColor,
+            borderColorHover,
+            colorMarkerHover,
+            backgroundColorHover
         } = elementStyle
         const elementStyleContent = elementStyleTemplate
             .replace(/{borderColor}/g, borderColor)
